@@ -45,7 +45,7 @@ public class LogingFilter implements Filter {
         System.out.println(requested_uri);
         if (session != null) {
 
-            if (requested_uri.endsWith("/JSPCRUD/") || requested_uri.endsWith("/JSPCRUD/home.jsp")) {
+            if (requested_uri.endsWith("/JSPCRUD/") || requested_uri.endsWith("/JSPCRUD/home.jsp") || requested_uri.endsWith("/JSPCRUD/index.jsp")) {
                 RequestDispatcher obj_dispatcher = http_request.getRequestDispatcher("/home.jsp");
                 obj_dispatcher.forward(request, response);
             } else {
