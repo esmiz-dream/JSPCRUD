@@ -34,22 +34,28 @@ public class LogingFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-   
-
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest http_request = (HttpServletRequest) request;
-      //  Cookie cookies_user[] = http_request.getCookies();
+        //  Cookie cookies_user[] = http_request.getCookies();
         HttpSession session = http_request.getSession(false);
-        if (session != null && !http_request.getRequestURL().toString().equalsIgnoreCase("http://localhost:8080/JSPCRUD/LogoutServlet")) {
-            RequestDispatcher obj_dispatcher = http_request.getRequestDispatcher("/home.jsp");
-            obj_dispatcher.forward(request, response);
-            System.out.print("have cookes ->");
-        } else {
-                        chain.doFilter(request, response);
+        String requested_uri = http_request.getRequestURI().toString();
+        System.out.println(requested_uri);
+        if (session != null) {
 
+            if (requested_uri.endsWith("/JSPCRUD/") || requested_uri.endsWith("/JSPCRUD/home.jsp")) {
+                RequestDispatcher obj_dispatcher = http_request.getRequestDispatcher("/home.jsp");
+                obj_dispatcher.forward(request, response);
+            } else {
+                chain.doFilter(request, response);
+            }
+
+        } else if (requested_uri.endsWith("/JSPCRUD/Login")) {
+            chain.doFilter(request, response);
+        } else {
+            //  chain.doFilter(request, response);
             RequestDispatcher obj_dispatcher = http_request.getRequestDispatcher("/index.jsp");
             obj_dispatcher.forward(request, response);
         }
@@ -84,8 +90,7 @@ public class LogingFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         this.context = filterConfig.getServletContext();
         this.filterConfig = filterConfig;
-     
+
     }
- 
 
 }
