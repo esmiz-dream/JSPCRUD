@@ -63,43 +63,7 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //  processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
-        String n = request.getParameter("userName");
-        PrintWriter out = response.getWriter();
-
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        LoginBean loginbean = new LoginBean();
-        loginbean.setEmail(email);
-        loginbean.setPassword(password);
-
-        User_CRUD crud = new User_CRUD();
-        System.out.println(email);
-        boolean status = crud.loginDao(loginbean);
-
-        if (status) {
-            HttpSession old_session = request.getSession(false);
-            if (old_session != null) {
-                old_session.invalidate();
-            }
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", loginbean.getName());
-            session.setMaxInactiveInterval(3 * 60);
-
-            Cookie cook_user = new Cookie("user", loginbean.getName());
-            cook_user.setMaxAge(3 * 60);
-            response.addCookie(cook_user);
-
-            RequestDispatcher obj_dispatcher = request.getRequestDispatcher("/home.jsp");
-            obj_dispatcher.forward(request, response);
-          //  response.sendRedirect("home.jsp");
-            System.out.println("wellcom Mr. " + loginbean.getName());
-        } else {
-            RequestDispatcher obj_dispatcher = request.getRequestDispatcher("/index.jsp");
-            out.print("incorrect username and password! please try again!!!");
-            obj_dispatcher.include(request, response);
-        }
+      
     }
 
     /**
@@ -113,7 +77,43 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+          response.setContentType("text/html;charset=UTF-8");
+        String n = request.getParameter("userName");
+        PrintWriter out = response.getWriter();
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        LoginBean loginbean = new LoginBean();
+        loginbean.setEmail(email);
+        loginbean.setPassword(password);
+
+        User_CRUD crud = new User_CRUD();
+         
+        boolean status = crud.loginDao(loginbean);
+
+        if (status) {
+            HttpSession old_session = request.getSession(false);
+            if (old_session != null) {
+                old_session.invalidate();
+            }
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", loginbean.getName());
+            session.setMaxInactiveInterval(10 * 60);
+
+            Cookie cook_user = new Cookie("user", loginbean.getName());
+            cook_user.setMaxAge(10 * 60);
+            response.addCookie(cook_user);
+
+            RequestDispatcher obj_dispatcher = request.getRequestDispatcher("/home.jsp");
+            obj_dispatcher.forward(request, response);
+          //  response.sendRedirect("home.jsp");
+            
+        } else {
+            RequestDispatcher obj_dispatcher = request.getRequestDispatcher("/index.jsp");
+            out.print("incorrect username and password! please try again!!!");
+            obj_dispatcher.include(request, response);
+        }
     }
 
     /**
