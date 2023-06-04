@@ -5,9 +5,6 @@
 package com.crud.filter;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -16,7 +13,6 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -42,7 +38,7 @@ public class LogingFilter implements Filter {
         //  Cookie cookies_user[] = http_request.getCookies();
         HttpSession session = http_request.getSession(false);
         String requested_uri = http_request.getRequestURI().toString();
-        System.out.println(requested_uri);
+    
         if (session != null) {
 
             if (requested_uri.endsWith("/JSPCRUD/") || requested_uri.endsWith("/JSPCRUD/home.jsp") || requested_uri.endsWith("/JSPCRUD/index.jsp")) {

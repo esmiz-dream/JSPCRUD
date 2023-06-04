@@ -61,18 +61,18 @@ public class User_CRUD {
 		return count;
 	}
 
-	public int addUser(String name, String password, String email, String sex, String country) {
+	public int addUser(User_Bean obj_user_bean) {
 		Db_connection db = new Db_connection();
 		conn = db.getConnection();
 		int status = 0;
 		try {
 			PreparedStatement insert = conn
 					.prepareStatement("insert into user(name,password,email,sex,country) values(?,?,?,?,?)");
-			insert.setString(1, name);
-			insert.setString(2, password);
-			insert.setString(3, email);
-			insert.setString(4, sex);
-			insert.setString(5, country);
+			insert.setString(1, obj_user_bean.getName());
+			insert.setString(2, obj_user_bean.getPassword());
+			insert.setString(3, obj_user_bean.getEmail());
+			insert.setString(4, obj_user_bean.getSex());
+			insert.setString(5, obj_user_bean.getCountry());
 			status = insert.executeUpdate();
 			conn.close();
 

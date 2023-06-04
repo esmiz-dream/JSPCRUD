@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-         metadata-complete="true">
+<web-app metadata-complete="true" version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>PageStatusFilter</filter-name>
         <filter-class>com.crud.app.filter.PageStatusFilter</filter-class>
@@ -15,7 +12,18 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.crud.filter.AuthenticationFilter</filter-class>
     </filter>
-   
+    <filter>
+        <filter-name>FormValidation</filter-name>
+        <filter-class>com.crud.filter.FormValidation</filter-class>
+    </filter>
+    <filter>
+        <filter-name>LogingFilter</filter-name>
+        <filter-class>com.crud.filter.LogingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FormValidation</filter-name>
+        <url-pattern>/AddUser</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/ProfileServlet</url-pattern>
@@ -24,16 +32,10 @@
         <filter-name>PageStatusFilter</filter-name>
         <url-pattern>/ProfileServlet</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>LogingFilter</filter-name>
-        <filter-class>com.crud.filter.LogingFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>LogingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
-    
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.crud.app.Login</servlet-class>
@@ -65,5 +67,13 @@
     <servlet-mapping>
         <servlet-name>LogHistoryServlet</servlet-name>
         <url-pattern>/LogHistoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>com.crud.app.AddUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/AddUser</url-pattern>
     </servlet-mapping>
 </web-app>

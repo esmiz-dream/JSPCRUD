@@ -46,9 +46,9 @@ public class LogoutServlet extends HttpServlet {
         Cookie cook_user = new Cookie("user", "");
         cook_user.setMaxAge(0);
         response.addCookie(cook_user);
-           System.out.println("logout after filter");
+
         if (session != null) {
-            System.out.println("logout successfully");
+
             session.invalidate();
             ServletContext application = getServletContext();
             RequestDispatcher obj_dispatch = application.getRequestDispatcher("/index.jsp");
